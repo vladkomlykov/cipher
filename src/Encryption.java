@@ -1,3 +1,5 @@
+ import java.io.FileWriter;
+ import java.io.IOException;
  import java.util.Scanner; import java.util.stream.IntStream;
  public class Encryption {
      static String alfa = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЧШЩЪЫЬЭЮЯabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ !?.,";
@@ -14,9 +16,29 @@
          ret = cryptStr(str, key);
          System.out.println("Зашифрованная строка");
          System.out.println(ret);
+         try (FileWriter fileWriter = new FileWriter("codedFile.txt")){
+             String text = ret;
+             fileWriter.write(text);
+
+             fileWriter.flush();
+         }
+         catch (IOException exception){
+
+             System.out.println(exception.getMessage());
+         }
          ret = cryptStr(ret, key);
          System.out.println("Дишифрованная строка");
          System.out.println(ret);
+         try (FileWriter fileWriter = new FileWriter("file.txt")){
+             String codedText = ret;
+             fileWriter.write(codedText);
+
+             fileWriter.flush();
+         }
+         catch (IOException exception){
+
+             System.out.println(exception.getMessage());
+         }
      }
      private static String cryptStr(String str, String key) {
          int[] codeStr = str.chars().map(i -> alfa.indexOf(i)).toArray();
